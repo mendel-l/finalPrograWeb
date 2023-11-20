@@ -1,0 +1,88 @@
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-plain">
+        <div class="card-header">
+          
+          <h4 class="card-title">Tareas</h4>
+          <p class="category">Se están listando las tareas</p>
+          <div class="form-group">
+            <label for="tareaDropdown">Seleccionar una tarea:</label>
+            <select class="form-control" id="tareaDropdown" [(ngModel)]="selectedTareaId" (change)="seleccionarTarea()">
+              <option *ngFor="let tarea of tareasList" [value]="tarea.id">{{ tarea.id }} - {{ tarea.nombre }}</option>
+            </select>
+          </div>
+
+          <div *ngIf="selectedTareaDetails">
+            <h5>Detalles de la tarea seleccionada</h5>
+            <p>ID: {{ selectedTareaDetails.id }}</p>
+            <p>Nombre: {{ selectedTareaDetails.nombre }}</p>
+            <p>Descripción: {{ selectedTareaDetails.descripcion }}</p>
+            <p>Estado: {{ selectedTareaDetails.estado }}</p>
+          </div>
+
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table tablesorter" id="">
+              <thead class="text-primary">
+                <tr>
+                  <th>Acciones</th>
+                  <th>Id</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tarea of data">
+                  <td>
+                    <button (click)="actualizarTarea()">Editar</button>
+                    <button (click)="eliminarTarea()">Eliminar</button>
+                  </td>
+                  <td>{{ tarea.id }}</td>
+                  <td>{{ tarea.nombre }}</td>
+                  <td>{{ tarea.descripcion }}</td>
+                  <td>{{ tarea.estado }}</td>
+                </tr>
+              </tbody>
+            </table>
+          <button class="btn btn-primary" (click)="abrirModal(agregarTareaModal)">Agregar Tarea</button>
+            <ng-template #agregarTareaModal let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Agregar Nueva Tarea</h4>
+                <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form (ngSubmit)="agregarTarea()">
+
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label for="nombre">Nombre</label>
+                      <input type="text" class="form-control" id="nombre" [(ngModel)]="nuevaTarea.nombre">
+                    </div>
+                    <div class="form-group">
+                      <label for="descripcion">Descripción</label>
+                      <input type="text" class="form-control" id="descripcion" [(ngModel)]="nuevaTarea.descripcion">
+                    </div>
+                    <div class="form-group">
+                      <label for="estado">Estado</label>
+                      <select class="form-control" id="estado" [(ngModel)]="nuevaTarea.estado">
+                        <option value="1">1 - PENDIENTE</option>
+                        <option value="2">2 - CANCELADA</option>
+                        <option value="3">3 - COMPLETADA</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Agregar Tarea</button>
+                </form>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
